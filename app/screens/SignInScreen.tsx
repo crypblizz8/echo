@@ -1,23 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { registerRootComponent } from "expo";
+import * as AppleAuthentication from "expo-apple-authentication";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { supabase } from "../../lib/supabase";
+import { AppleLogin } from "../components/AppleLogin";
 
-export default function SignInScreen({ navigation }: { navigation: any }) {
+const SignInScreen = ({ navigation }: { navigation: any }) => {
   return (
-    <View style={styles.container}>
-      {/* <Text>SIGN IN</Text> */}
-      <Pressable onPress={() => navigation.navigate("Home")}>
-        <Text>Sign in B</Text>
+    <View className="flex-1 items-center justify-center bg-white">
+      <Pressable className="mb-4" onPress={() => navigation.navigate("Home")}>
+        <Text>Skip</Text>
       </Pressable>
+      <AppleLogin navigation={navigation} />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default SignInScreen;

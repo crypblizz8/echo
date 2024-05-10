@@ -17,7 +17,7 @@ State
 
 - Async Storage (due to supabase)
 - (mmkv)
-- Zustand
+- (Zustand)
 
 Navigation
 
@@ -33,7 +33,9 @@ ENVS
 
 - Create new project
 - Get SUPABASE_URL and SUPABASE_ANON_KEY
-- On Dashboard --> Project Settings --> Authentication
+- Then watch this YT tutorial (https://www.youtube.com/watch?v=6I2JEky20ME) You will need an Apple Dev Account
+- On Dashboard --> Project Settings --> Authentication (https://supabase.com/dashboard/project/_/auth/providers)
+- With `Authorized Client IDs`, add `iOS, host.exp.Exponent` because Expo needs authorization
 
 ## ENVS
 
