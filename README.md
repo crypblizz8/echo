@@ -1,6 +1,6 @@
-# RN AI Tempalte
+# RN AI BoilerPlate
 
-Quick BoilerPlate to make RN / EXPO AI Apps
+Quick BoilerPlate to make RN / Expo AI Apps
 
 # Stack
 
@@ -25,6 +25,8 @@ Navigation
 
 ENVS
 
+- react dot env
+
 # Prerequisites
 
 ## Supabase
@@ -37,6 +39,8 @@ ENVS
 
 - Reference env.example
 - Add into env
+
+---
 
 ## Installation
 
