@@ -4,6 +4,10 @@ Quick BoilerPlate to make RN / Expo AI Apps
 
 # Stack
 
+AI Voice Stack
+- Vapi
+- Deepagram
+
 Auth + DB
 
 - Supabase
