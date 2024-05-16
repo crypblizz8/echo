@@ -1,4 +1,4 @@
-package com.tterado.vapiDebug
+package com.tterado.echo
 
 import android.app.Application
 import android.content.res.Configuration

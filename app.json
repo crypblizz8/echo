@@ -30,13 +30,21 @@
     "ios": {
       "supportsTablet": true,
       "usesAppleSignIn": true,
-      "bundleIdentifier": "co.vapi.DailyPlayground",
+      "bundleIdentifier": "com.tterado.echo",
       "infoPlist": {
         "UIBackgroundModes": [
           "voip"
         ]
       },
-      "bitcode": false
+      "bitcode": false,
+      "privacyManifests": {
+        "NSPrivacyAccessedAPITypes": [
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+            "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -54,7 +62,7 @@
         "android.permission.WAKE_LOCK",
         "android.permission.FOREGROUND_SERVICE"
       ],
-      "package": "com.tterado.vapiDebug"
+      "package": "com.tterado.echo"
     },
     "web": {
       "favicon": "./assets/favicon.png"

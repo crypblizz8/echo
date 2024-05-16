@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "rnaitemplate.app"
-               BlueprintName = "rnaitemplate"
-               ReferencedContainer = "container:rnaitemplate.xcodeproj">
+               BuildableName = "echo.app"
+               BlueprintName = "echo"
+               ReferencedContainer = "container:echo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "rnaitemplateTests.xctest"
-               BlueprintName = "rnaitemplateTests"
-               ReferencedContainer = "container:rnaitemplate.xcodeproj">
+               BuildableName = "echoTests.xctest"
+               BlueprintName = "echoTests"
+               ReferencedContainer = "container:echo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rnaitemplate.app"
-            BlueprintName = "rnaitemplate"
-            ReferencedContainer = "container:rnaitemplate.xcodeproj">
+            BuildableName = "echo.app"
+            BlueprintName = "echo"
+            ReferencedContainer = "container:echo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rnaitemplate.app"
-            BlueprintName = "rnaitemplate"
-            ReferencedContainer = "container:rnaitemplate.xcodeproj">
+            BuildableName = "echo.app"
+            BlueprintName = "echo"
+            ReferencedContainer = "container:echo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

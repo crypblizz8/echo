@@ -1,12 +1,13 @@
-# RN AI BoilerPlate
+# Echo
 
-Quick BoilerPlate to make RN / Expo AI Apps
+Your friendly journal
 
 # Stack
 
 AI Voice Stack
 - Vapi
 - Deepagram
+- Groq (Llama3 70B)
 
 Auth + DB
 
