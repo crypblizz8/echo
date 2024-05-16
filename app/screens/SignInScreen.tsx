@@ -1,6 +1,6 @@
 import * as AppleAuthentication from "expo-apple-authentication";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { supabase } from "../../lib/supabase";
+// import { supabase } from "../../lib/supabase";
 import { AppleLogin } from "../components/AppleLogin";
 
 const SignInScreen = ({ navigation }: { navigation: any }) => {
@@ -9,7 +9,7 @@ const SignInScreen = ({ navigation }: { navigation: any }) => {
       <Pressable className="mb-4" onPress={() => navigation.navigate("Home")}>
         <Text>Skip</Text>
       </Pressable>
-      <AppleLogin navigation={navigation} />
+      {/* <AppleLogin navigation={navigation} /> */}
     </View>
   );
 };
