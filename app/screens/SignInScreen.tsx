@@ -13,9 +13,6 @@ const SignInScreen = ({ navigation }: { navigation: any }) => {
         </Text>
       </View>
       <View className="h-1/5 justify-center item-center ">
-        <Pressable className="mb-4" onPress={() => navigation.navigate("Home")}>
-          <Text> Skip</Text>
-        </Pressable>
         <AppleLogin navigation={navigation} />
       </View>
     </View>

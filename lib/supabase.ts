@@ -14,3 +14,36 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: false,
   },
 });
+
+export const uploadTranscript = async (transcript: any) => {
+  console.log("Uploading transcript:", transcript);
+
+  const { data, error } = await supabase.from("transcripts").insert([
+    {
+      transcript: transcript,
+    },
+  ]);
+
+  if (error) {
+    console.error("Error uploading JSON object:", error);
+  } else {
+    console.log("Successfully uploaded JSON object:", data);
+  }
+  // const response = await vapi.uploadSupabase();
+};
+
+export const getTranscripts = async (setTranscripts, setLoadingTranscripts) => {
+  setLoadingTranscripts(true)
+  const { data, error } = await supabase
+    .from("transcripts")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Error fetching transcripts:", error);
+  } else {
+    console.log("Successfully fetched transcripts:", data);
+    setTranscripts(data);
+    setLoadingTranscripts(false)
+    return data;
+  }
+};

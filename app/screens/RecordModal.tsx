@@ -11,6 +11,7 @@ import { SwipeIndicator } from "../components/SwipeIndicator";
 import { useCallback, useEffect, useState } from "react";
 import { startAssistant, stopAssistant, vapi } from "../../lib/vapi";
 import LottieView from "lottie-react-native";
+import { uploadTranscript } from "../../lib/supabase";
 
 const HALF_HEIGHT = Dimensions.get("window").height / 2;
 
@@ -57,18 +58,18 @@ export const RecordModal = ({
         setLiveScript("");
         const hasContents = conversation.every((item) => item.content !== "");
 
-        if (hasContents) {
-          // console.log('conversation:', conversation);
-          //   await uploadTranscript(conversation);
+        if (hasContents && conversation.length > 0) {
+          console.log("conversation:", conversation);
+          await uploadTranscript(conversation);
           console.log("testing uploading...");
         }
-        await stopAssistant();
+        // await stopAssistant();
       } catch (error) {
         console.error("Error stopping assistant:", error);
       }
     } else {
       try {
-        await startAssistant();
+        // await startAssistant();
         setIsLoading(true);
         setTimeout(() => {
           setIsLoading(false);
@@ -83,6 +84,18 @@ export const RecordModal = ({
     onDismiss();
   };
 
+  const initialState = () => {
+    return <Text style={styles.pressTalk}>Press to chat to Echo</Text>;
+  };
+
+  const loadingState = () => {
+    return <Text style={styles.pressTalk}> Loading Echo...</Text>;
+  };
+
+  const listeningState = () => {
+    return <Text style={styles.pressTalk}>I'm all ears</Text>;
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -93,14 +106,13 @@ export const RecordModal = ({
       <View className="flex-1 justify-end">
         <View className="h-4/5 bg-white p-4 rounded-t-3xl">
           <SwipeIndicator />
-          <View className="flex-1 justify-center items-center">
-            {!isListening ? (
-              <Text style={styles.pressTalk}> Press to chat to Echo</Text>
-            ) : (
-              <Text style={styles.pressTalk}> Loading Echo...</Text>
-            )}
+          <View className="flex-1 justify-center items-center mb-10">
+            {!isListening && !isLoading && initialState()}
+            {isLoading && loadingState()}
+            {!isLoading && isListening && listeningState()}
 
             <TouchableOpacity
+              disabled={isLoading}
               onPress={async () => await toggle()}
               style={styles.container}
             >
@@ -110,7 +122,7 @@ export const RecordModal = ({
                 <Text style={styles.microphone}>🎙️</Text>
               )}
             </TouchableOpacity>
-            {/* {isLoading && isListening && (
+            {!isLoading && isListening && (
               <>
                 <LottieView
                   source={require("../../assets/ring.json")}
@@ -119,19 +131,13 @@ export const RecordModal = ({
                   loop
                 />
               </>
-            )} */}
+            )}
 
             {liveScript && (
               <View style={styles.liveScriptContainer}>
                 <Text style={styles.liveScriptText}>{liveScript}</Text>
               </View>
             )}
-            {/* <View className="justify-center items-center">
-              <Text className="italic text-16 text-gray-400 mb-4">
-                Echo is loading...
-              </Text>
-            </View>
-            <ActivityIndicator size="large" color="grey" /> */}
           </View>
         </View>
       </View>
@@ -275,7 +281,7 @@ const styles = StyleSheet.create({
     height: HALF_HEIGHT,
     zIndex: -1,
     position: "absolute",
-    top: "50%",
+    top: "53%",
     left: "50%",
     transform: [
       { translateX: -HALF_HEIGHT / 2 },

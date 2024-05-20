@@ -1,8 +1,13 @@
 import * as AppleAuthentication from "expo-apple-authentication";
 import { supabase } from "../../lib/supabase";
 import { StyleSheet } from "react-native";
+import { AuthContext } from "../navigation/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext } from "react";
 
 export const AppleLogin = ({ navigation }: { navigation: any }) => {
+  const { authState, updateAuthState } = useContext(AuthContext);
+
   return (
     <AppleAuthentication.AppleAuthenticationButton
       buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
@@ -30,6 +35,14 @@ export const AppleLogin = ({ navigation }: { navigation: any }) => {
 
             // console.log(JSON.stringify({ error, user }, null, 2));
             if (!error) {
+              AsyncStorage.setItem(
+                "authState",
+                JSON.stringify({ authenticated: true, user, loggedIn: true })
+              );
+
+              // Update the authentication state
+              updateAuthState({ authenticated: true, user, loggedIn: true });
+
               navigation.navigate("Home");
               return;
               // User is signed in.
