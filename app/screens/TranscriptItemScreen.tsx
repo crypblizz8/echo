@@ -14,7 +14,7 @@ export const TranscriptItemScreen = ({ route }: any) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {transcript.map((transcript: any, index: any) => {
           const { role, content } = transcript;
           return (

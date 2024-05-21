@@ -2,10 +2,11 @@ import * as React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 const MOOD = [
-  { mood: "Great", emoji: "😁" },
-  { mood: "Good", emoji: "😶" },
-  { mood: "Meh", emoji: "" },
+  { mood: "Amazing", emoji: "😁" },
+  { mood: "Good", emoji: "😁" },
+  { mood: "Average", emoji: "🙃" },
   { mood: "Bad", emoji: "😔" },
+  { mood: "Tough", emoji: "😢" },
   { mood: "Sad", emoji: "😢" },
 ];
 

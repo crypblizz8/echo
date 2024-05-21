@@ -63,26 +63,44 @@ export const RecordModal = ({
         // console.log("PRE uplaoding", conversation);
         const hasContents = conversation.every((item) => item.content !== "");
         // console.log("hasContents:", hasContents);
-
+        setLiveScript("");
+        await stopAssistant();
         if (hasContents && conversation.length > 0) {
           // console.log("conversation UPLOADING:", conversation);
-          const mood = await getGroqChatCompletion(
-            `As the assistant, only return one word as either Great / Good / Meh / Bad / Sad as the response when summarizing this conversation: ${JSON.stringify(
+          // const mood = await getGroqChatCompletion(
+          //   `As the assistant, only return one word as either Amazing / Tough  / Sad as the response when summarizing this conversation from the user: ${JSON.stringify(
+          //     conversation
+          //   )}`
+          // );
+
+          // console.log("mood:", mood);
+
+          // await uploadTranscript(conversation, "Sad");
+          // console.log("testing uploading...");
+          await getGroqChatCompletion(
+            `As the assistant, only return one word as either Amazing / Tough  / Sad as the response when summarizing this conversation from the user: ${JSON.stringify(
               conversation
             )}`
-          );
-
-          await uploadTranscript(conversation, mood);
-          console.log("testing uploading...");
+          )
+            .then((mood) => {
+              console.log("mood:", mood);
+              return uploadTranscript(conversation, mood); // Return the promise from uploadTranscript
+            })
+            .then(() => {
+              console.log("testing uploading...");
+            })
+            .catch((error) => {
+              console.error("Error during asynchronous operations:", error);
+            });
         }
-        await stopAssistant();
-        setLiveScript("");
+        setVisible(false);
+        onRefresh();
       } catch (error) {
         console.error("Error stopping assistant:", error);
       } finally {
         // setLoadingTranscripts(false);
-        setVisible(false);
-        onRefresh(); // Call the passed refresh function
+        // setVisible(false);
+        // onRefresh(); // Call the passed refresh function
       }
     } else {
       try {

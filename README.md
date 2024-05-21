@@ -1,13 +1,21 @@
-# Echo
+# Echo AI
 
-Your friendly journal
+Your friendly AI mood journal.
+Vapi AI Hackathon Submission.
 
 # Stack
 
 AI Voice Stack
-- Vapi
-- Deepagram
-- Groq (Llama3 70B)
+
+- Vapi: React Native SDK
+  `"@vapi-ai/react-native": "^0.1.7",`
+- Daily: React Native SDK
+  `"@daily-co/react-native-daily-js": "0.61.0",`
+  `"@daily-co/react-native-webrtc": "118.0.3-daily.1",`
+- Deepagram: voice API for the agent
+- Groq: Mood Stiment Analysis
+  ` "groq-sdk": "^0.3.3",`
+  ` model = "llama3-8b-8192"`
 
 Auth + DB
 
@@ -21,8 +29,6 @@ Style
 State
 
 - Async Storage (due to supabase)
-- (mmkv)
-- (Zustand)
 
 Navigation
 
@@ -47,6 +53,10 @@ ENVS
 - Reference env.example
 - Add into env
 
+## Note
+
+Commits from 2 weeks ago was making a boilerplate for Expo + Apple Sign in + Supabase.
+
 ---
 
 ## Installation
@@ -55,10 +65,12 @@ ENVS
 
    ```bash
    npm install
+   npx expo prebuild
+   // Check pods have installed
    ```
 
 2. Start the app
 
    ```bash
-    npx expo start
+    npx expo run:ios
    ```

@@ -24,8 +24,10 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
   }, []);
 
   const refreshData = () => {
-    setTranscripts([]); // Clear local state for update
+    setLoadingTranscripts(true);
+    console.log("transript REFRESH");
     getTranscripts(setTranscripts, setLoadingTranscripts);
+    setLoadingTranscripts(false);
   };
 
   if (loadingTranscripts)
@@ -75,33 +77,45 @@ export default function HomeScreen({ navigation }: { navigation: any }) {
   return (
     <View className="flex-1 bg-F8F8F8 p-4">
       <Header navigation={navigation} />
-      {transcripts && transcripts.length === 0 ? (
-        <View className="flex-1 justify-center">
-          <EmptyStateText />
-        </View>
-      ) : (
-        <View className="flex-1">
-          <Text className="text-3xl font-semi" style={{ color: "#111111" }}>
-            Entries
-          </Text>
+      <View className="flex-1">
+        {transcripts && transcripts.length === 0 ? (
+          <View className="flex-1 justify-center">
+            {loadingTranscripts ? (
+              <ActivityIndicator size="large" color="#111111" />
+            ) : (
+              <EmptyStateText />
+            )}
+          </View>
+        ) : (
+          <View className="flex-1">
+            <Text className="text-3xl font-semi" style={{ color: "#111111" }}>
+              Entries
+            </Text>
 
-          <FlatList
-            className="mt-4"
-            showsVerticalScrollIndicator={false}
-            data={flattenedData}
-            renderItem={renderGroupedItem}
-            keyExtractor={(item, index) => index.toString()}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={refreshData} />
-            }
-          />
-        </View>
-      )}
+            <FlatList
+              className="mt-4"
+              showsVerticalScrollIndicator={false}
+              data={flattenedData}
+              renderItem={renderGroupedItem}
+              keyExtractor={(item, index) => index.toString()}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={refreshData}
+                />
+              }
+            />
+          </View>
+        )}
+      </View>
 
       <RecordButton onPress={() => setVisible(true)} />
       <RecordModal
         isVisible={visible}
-        onDismiss={() => setVisible(false)}
+        onDismiss={() => {
+          // refreshData;
+          setVisible(false);
+        }}
         onRefresh={refreshData}
         setVisible={setVisible}
       />

@@ -11,10 +11,10 @@ groq = new Groq({
 
 export async function getGroqChatCompletion(
   message: string,
-  model = "llama3-8b-8192"
+  model = "llama3-70b-8192"
 ): Promise<string | undefined> {
   try {
-    // console.log("getGroqChatCompletion PROMPT message", message);
+    console.log("getGroqChatCompletion PROMPT message", message);
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         {
@@ -30,7 +30,7 @@ export async function getGroqChatCompletion(
     // );
     return chatCompletion.choices?.[0]?.message?.content;
   } catch (error) {
-    console.error("Error fetching chat completion:", error);
-    return undefined;
+    // console.error("Error fetching chat completion:", error);
+    return "N/A";
   }
 }
