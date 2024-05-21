@@ -1,16 +1,16 @@
 import Vapi from "@vapi-ai/react-native";
-import { VAPI_PUBLIC_KEY, ASSISTANT_ID } from "@env";
+import { EXPO_PUBLIC_ASSISTANT_ID, EXPO_PUBLIC_VAPI_PUBLIC_KEY } from "@env";
 export let vapi: any;
 
 export const startVapi = async () => {
-  vapi = new Vapi(VAPI_PUBLIC_KEY);
-  console.log("Vapi", vapi);
+  vapi = new Vapi(EXPO_PUBLIC_VAPI_PUBLIC_KEY);
+  // console.log("Vapi", vapi);
 };
 
 export const startAssistant = async () => {
   try {
-    console.log("Vapi started", VAPI_PUBLIC_KEY);
-    await vapi.start(ASSISTANT_ID);
+    // console.log("Vapi started", VAPI_PUBLIC_KEY);
+    await vapi.start(EXPO_PUBLIC_ASSISTANT_ID);
     console.log("Started assistant successfully.");
   } catch (error) {
     console.log("error starting assistant", error);

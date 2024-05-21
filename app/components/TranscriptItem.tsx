@@ -1,18 +1,30 @@
 import * as React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
+const MOOD = [
+  { mood: "Great", emoji: "😁" },
+  { mood: "Good", emoji: "😶" },
+  { mood: "Meh", emoji: "" },
+  { mood: "Bad", emoji: "😔" },
+  { mood: "Sad", emoji: "😢" },
+];
+
 const TranscriptItem = ({ item, onPress }) => {
-  const { created_at } = item;
+  const { created_at, sentiment } = item;
+  const matchedMood = MOOD.find((moodObj) => moodObj.mood === sentiment);
   return (
     <Pressable style={styles.messageContainer} onPress={() => onPress(item)}>
       <View style={styles.logContainer}>
-        <Text>
+        {/* <Text>
           {new Date(created_at).toLocaleString([], {
             hour: "2-digit",
             minute: "2-digit",
           })}
+        </Text> */}
+        <Text>
+          Feeling:
+          {sentiment ? (matchedMood ? matchedMood.emoji : "N/A") : "N/A"}
         </Text>
-        {/* <Text>Feeling Blue Today</Text> */}
       </View>
     </Pressable>
   );

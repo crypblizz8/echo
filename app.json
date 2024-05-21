@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "echo",
+    "name": "echo_ai_app",
     "slug": "echo",
-    "version": "1.0.0",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#F8F8F8"
     },
     "plugins": [
       "expo-apple-authentication",
@@ -33,18 +33,17 @@
       "usesAppleSignIn": true,
       "bundleIdentifier": "com.tterado.echo",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "voip"
-        ]
+        "UIBackgroundModes": ["voip"],
+        "NSCameraUsageDescription": "This app uses the camera to allow you to take a profile picture.",
+        "NSMicrophoneUsageDescription": "This app uses the microphone to allow you to record audio."
       },
+      "buildNumber": "2",
       "bitcode": false,
       "privacyManifests": {
         "NSPrivacyAccessedAPITypes": [
           {
             "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
-            "NSPrivacyAccessedAPITypeReasons": [
-              "CA92.1"
-            ]
+            "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]
           }
         ]
       }
@@ -63,7 +62,11 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.SYSTEM_ALERT_WINDOW",
         "android.permission.WAKE_LOCK",
-        "android.permission.FOREGROUND_SERVICE"
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_CAMERA",
+        "android.permission.FOREGROUND_SERVICE_MICROPHONE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION",
+        "android.permission.POST_NOTIFICATIONS"
       ],
       "package": "com.tterado.echo"
     },

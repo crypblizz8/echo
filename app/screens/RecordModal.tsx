@@ -12,15 +12,20 @@ import { useCallback, useEffect, useState } from "react";
 import { startAssistant, stopAssistant, vapi } from "../../lib/vapi";
 import LottieView from "lottie-react-native";
 import { uploadTranscript } from "../../lib/supabase";
+import { getGroqChatCompletion } from "../../lib/groq";
 
 const HALF_HEIGHT = Dimensions.get("window").height / 2;
 
 export const RecordModal = ({
   isVisible,
   onDismiss,
+  onRefresh,
+  setVisible,
 }: {
   isVisible: boolean;
   onDismiss: () => void;
+  onRefresh: () => void;
+  setVisible: (visible: boolean) => void;
 }) => {
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +48,7 @@ export const RecordModal = ({
 
   const handleMessage = (message: any) => {
     if (message.type === "conversation-update") {
-      console.log("converation", message.conversation);
+      // console.log("converation", message.conversation);
       setConversation(message.conversation);
       const lastSentence =
         message.conversation[message.conversation.length - 1].content;
@@ -55,22 +60,34 @@ export const RecordModal = ({
     setIsListening(!isListening);
     if (isListening) {
       try {
-        setLiveScript("");
+        // console.log("PRE uplaoding", conversation);
         const hasContents = conversation.every((item) => item.content !== "");
+        // console.log("hasContents:", hasContents);
 
         if (hasContents && conversation.length > 0) {
-          console.log("conversation:", conversation);
-          await uploadTranscript(conversation);
+          // console.log("conversation UPLOADING:", conversation);
+          const mood = await getGroqChatCompletion(
+            `As the assistant, only return one word as either Great / Good / Meh / Bad / Sad as the response when summarizing this conversation: ${JSON.stringify(
+              conversation
+            )}`
+          );
+
+          await uploadTranscript(conversation, mood);
           console.log("testing uploading...");
         }
-        // await stopAssistant();
+        await stopAssistant();
+        setLiveScript("");
       } catch (error) {
         console.error("Error stopping assistant:", error);
+      } finally {
+        // setLoadingTranscripts(false);
+        setVisible(false);
+        onRefresh(); // Call the passed refresh function
       }
     } else {
       try {
-        // await startAssistant();
         setIsLoading(true);
+        await startAssistant();
         setTimeout(() => {
           setIsLoading(false);
         }, 5000);
@@ -78,22 +95,59 @@ export const RecordModal = ({
         console.error("Error starting assistant:", error);
       }
     }
-  }, [isListening]);
+  }, [isListening, conversation]);
 
   const handleCloseModal = () => {
     onDismiss();
   };
 
   const initialState = () => {
-    return <Text style={styles.pressTalk}>Press to chat to Echo</Text>;
+    return (
+      <View className="justify-center items-center">
+        <Text style={styles.pressTalk}>Press to chat to Echo</Text>
+        <TouchableOpacity
+          disabled={isLoading}
+          onPress={async () => await toggle()}
+          style={styles.container}
+        >
+          <Text style={styles.microphone}>🎙️</Text>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   const loadingState = () => {
-    return <Text style={styles.pressTalk}> Loading Echo...</Text>;
+    return (
+      <View className="justify-center items-center">
+        <Text style={styles.pressTalk}> Loading Echo...</Text>
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color="black" />
+        </View>
+      </View>
+    );
   };
 
   const listeningState = () => {
-    return <Text style={styles.pressTalk}>I'm all ears</Text>;
+    return (
+      <View className="justify-center items-center">
+        <Text style={styles.pressTalk}>I'm all ears</Text>
+        <TouchableOpacity
+          disabled={isLoading}
+          onPress={async () => await toggle()}
+          style={styles.container}
+        >
+          <Text style={styles.microphone}>🎙️</Text>
+        </TouchableOpacity>
+        <>
+          <LottieView
+            source={require("../../assets/ring.json")}
+            style={styles.lottieContainer}
+            autoPlay
+            loop
+          />
+        </>
+      </View>
+    );
   };
 
   return (
@@ -108,30 +162,9 @@ export const RecordModal = ({
           <SwipeIndicator />
           <View className="flex-1 justify-center items-center mb-10">
             {!isListening && !isLoading && initialState()}
-            {isLoading && loadingState()}
+            {isLoading && isListening && loadingState()}
             {!isLoading && isListening && listeningState()}
-
-            <TouchableOpacity
-              disabled={isLoading}
-              onPress={async () => await toggle()}
-              style={styles.container}
-            >
-              {isLoading ? (
-                <ActivityIndicator size="large" color="black" />
-              ) : (
-                <Text style={styles.microphone}>🎙️</Text>
-              )}
-            </TouchableOpacity>
-            {!isLoading && isListening && (
-              <>
-                <LottieView
-                  source={require("../../assets/ring.json")}
-                  style={styles.lottieContainer}
-                  autoPlay
-                  loop
-                />
-              </>
-            )}
+            {/* {listeningState()} */}
 
             {liveScript && (
               <View style={styles.liveScriptContainer}>
@@ -281,8 +314,8 @@ const styles = StyleSheet.create({
     height: HALF_HEIGHT,
     zIndex: -1,
     position: "absolute",
-    top: "53%",
-    left: "50%",
+    top: "65%",
+    left: "17%",
     transform: [
       { translateX: -HALF_HEIGHT / 2 },
       { translateY: -HALF_HEIGHT / 2 },

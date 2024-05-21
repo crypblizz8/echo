@@ -1,4 +1,4 @@
-rootProject.name = 'echo'
+rootProject.name = 'echo_ai_app'
 
 dependencyResolutionManagement {
   versionCatalogs {

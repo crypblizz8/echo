@@ -15,12 +15,23 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
 });
 
-export const uploadTranscript = async (transcript: any) => {
+export const uploadTranscript = async (transcript: any, mood?: any) => {
   console.log("Uploading transcript:", transcript);
+
+  if (
+    mood! === "sad" ||
+    mood! === "bad" ||
+    mood! === "meh" ||
+    mood! === "good" ||
+    mood! === "amazing"
+  ) {
+    mood = "meh";
+  }
 
   const { data, error } = await supabase.from("transcripts").insert([
     {
       transcript: transcript,
+      sentiment: mood,
     },
   ]);
 
@@ -29,11 +40,10 @@ export const uploadTranscript = async (transcript: any) => {
   } else {
     console.log("Successfully uploaded JSON object:", data);
   }
-  // const response = await vapi.uploadSupabase();
 };
 
 export const getTranscripts = async (setTranscripts, setLoadingTranscripts) => {
-  setLoadingTranscripts(true)
+  setLoadingTranscripts(true);
   const { data, error } = await supabase
     .from("transcripts")
     .select("*")
@@ -41,9 +51,9 @@ export const getTranscripts = async (setTranscripts, setLoadingTranscripts) => {
   if (error) {
     console.error("Error fetching transcripts:", error);
   } else {
-    console.log("Successfully fetched transcripts:", data);
+    // console.log("Successfully fetched transcripts:", data);
     setTranscripts(data);
-    setLoadingTranscripts(false)
+    setLoadingTranscripts(false);
     return data;
   }
 };

@@ -1,10 +1,23 @@
-import { Text, View, FlatList, StyleSheet } from "react-native";
+import { Text, View, FlatList, StyleSheet, RefreshControl } from "react-native";
 import TranscriptItem from "./TranscriptItem";
+import React, { useState } from "react";
 
-export const Transcripts = ({ transcripts, navigation }) => {
+export const Transcripts = ({
+  transcripts,
+  navigation,
+  setLoadingTranscripts,
+}) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    // setLoadingTranscripts(true);
+    setRefreshing(false);
+  };
+
   const groupedData = groupByDate(transcripts);
 
-  const renderGroupedItem = ({ item }) => (
+ const renderGroupedItem = ({ item }) => (
     <View>
       <Text style={styles.dateHeader}>{item.date}</Text>
       {item.data.map((entry) => (
@@ -29,6 +42,9 @@ export const Transcripts = ({ transcripts, navigation }) => {
       data={flattenedData}
       renderItem={renderGroupedItem}
       keyExtractor={(item, index) => index.toString()}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     />
   );
 };
